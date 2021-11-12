@@ -9,8 +9,8 @@ class Transaction:
         self.receiverPublicKey = receiverPublicKey
         self.amount = amount
         self.type = type
-        self.id = uuid.uuid1().hex
-        self.timestamp = time.time()    #create unix timestamp
+        self.id = uuid.uuid1().hex      # create globally unique id
+        self.timestamp = time.time()    # create unix timestamp
         self.signature = ''             # only owner of private key is entitled to create transactions in its name
 
     def toJson(self):
@@ -25,3 +25,8 @@ class Transaction:
         jsonRepresentation = copy.deepcopy(self.toJson())
         jsonRepresentation['signature'] = ''
         return jsonRepresentation
+
+    def equals(self, transaction):
+        if self.id == transaction.id:
+            return True
+        return False
