@@ -27,3 +27,11 @@ class TransactionPool:
                 newPoolTransactions.append(poolTransaction)
         self.transactions = newPoolTransactions
 
+    # checks if threshold of transactions in transaction pool is reached and if it is, then it signals it's time to
+    # generate a new block and generate a new forger
+    def forgerRequired(self):
+        if len(self.transactions) >= 1: #create new block for each transaction if value is 1
+            return True
+        return False
+
+

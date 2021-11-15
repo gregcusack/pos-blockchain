@@ -9,6 +9,12 @@ class Wallet:
     def __init__(self):
         self.keyPair = RSA.generate(2048) #2048 is mod number for RSA
 
+    def fromKey(self, keyFile):
+        key = ''
+        with open(keyFile, 'r') as kf:
+            key = RSA.importKey(kf.read())
+        self.keyPair = key
+
     # takes data and creates signature based on keypair
     def sign(self, data):
         dataHash = BlockchainUtils.hash_(data)
