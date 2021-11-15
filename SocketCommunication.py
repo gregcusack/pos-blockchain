@@ -23,7 +23,8 @@ class SocketCommunication(Node):
         if self.socketConnector.port != 10001: # as long as we are not running on port 10001, we conenct to it
             self.connect_with_node('localhost', 10001)
 
-    def startSocketCommunication(self):
+    def startSocketCommunication(self, node):
+        self.node = node
         self.start()  # calls start socket comm using ip and port
         self.peerDiscoveryHandler.start()
         self.connectToFirstNode()
@@ -41,8 +42,9 @@ class SocketCommunication(Node):
         message = BlockchainUtils.decode(json.dumps(message))
         if message.messageType == 'DISCOVERY':
             self.peerDiscoveryHandler.handleMessage(message)
-        # elif message.messageType == 'TRANSACTION':
-        #     transaction = message.data
+        elif message.messageType == 'TRANSACTION':  # need to sent newly received tx to other nodes in network
+            transaction = message.data
+            self.node.handleTransaction(transaction)
 
 
     def send(self, receiver, message):
