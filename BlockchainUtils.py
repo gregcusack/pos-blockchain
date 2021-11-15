@@ -2,6 +2,8 @@
 # methods used across whole application
 from Crypto.Hash import SHA256
 import json
+import jsonpickle
+
 
 class BlockchainUtils:
 
@@ -15,5 +17,11 @@ class BlockchainUtils:
         dataHash = SHA256.new(dataBytes) #input must be byte string
         return dataHash
 
+    @staticmethod
+    def encode(objectToEncode):
+        # unpickable=true lets receiver decode object
+        return jsonpickle.encode(objectToEncode, unpicklable=True)
 
-
+    @staticmethod
+    def decode(encodedObject):
+        return jsonpickle.decode(encodedObject)

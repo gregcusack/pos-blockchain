@@ -14,3 +14,16 @@ class TransactionPool:
             if poolTransaction.equals(transaction):
                 return True
         return False
+
+    # remove txs from pool that are going into next block
+    def removeFromPool(self, transactions):
+        newPoolTransactions = []
+        for poolTransaction in self.transactions:
+            insert = True
+            for transaction in transactions:
+                if poolTransaction.equals(transaction):
+                    insert = False # don't insert into new list
+            if insert:
+                newPoolTransactions.append(poolTransaction)
+        self.transactions = newPoolTransactions
+
