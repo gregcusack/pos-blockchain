@@ -41,6 +41,9 @@ class SocketCommunication(Node):
         message = BlockchainUtils.decode(json.dumps(message))
         if message.messageType == 'DISCOVERY':
             self.peerDiscoveryHandler.handleMessage(message)
+        # elif message.messageType == 'TRANSACTION':
+        #     transaction = message.data
+
 
     def send(self, receiver, message):
         self.send_to_node(receiver, message)
